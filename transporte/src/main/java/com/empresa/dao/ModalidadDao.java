@@ -29,7 +29,40 @@ public class ModalidadDao {
     public ModalidadDao(Conexion con) {
         this.conn = con;
     }
-
+    
+     public boolean insertar(ModalidadBean modBea){
+    
+        sql = "insert into modalidad values(?,?)";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, modBea.getIdmodali());
+            ps.setString(2, modBea.getDescri());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    }
+     public boolean actualizar(ModalidadBean modBea){
+        
+        sql = "update modalidad set descripcion where idmodalidad =?";
+        
+         try {
+             
+             ps = conn.conexion().prepareStatement(sql);
+             
+             ps.setString(1, modBea.getDescri());
+             ps.setInt(2, modBea.getIdmodali());
+             ps.executeUpdate();
+             return true;
+         } catch (Exception e) {
+             return false;
+         }
+    }
+    
     public boolean eliminar(int id) {
         sql = "DELETE FROM modalidad WHERE idmodalidad=?";
         try {
