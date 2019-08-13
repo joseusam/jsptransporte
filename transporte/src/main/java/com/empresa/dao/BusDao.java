@@ -6,6 +6,10 @@
 package com.empresa.dao;
 
 import com.empresa.conexion.Conexion;
+import com.empresa.model.BusBean;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -13,4 +17,15 @@ import com.empresa.conexion.Conexion;
  */
 public class BusDao {
     private Conexion conn;
+    private BusBean busBea;
+    private List<BusBean> busLS;
+    
+    private ResultSet rs;
+    private PreparedStatement ps;
+
+    public BusDao(Conexion conn) {
+        this.conn = conn;
+    }
+    
+    
 }
