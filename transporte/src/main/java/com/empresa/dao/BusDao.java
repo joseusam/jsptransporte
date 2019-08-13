@@ -5,6 +5,8 @@
  */
 package com.empresa.dao;
 
+import com.empresa.conexion.Conexion;
+
 /**
  *
  * @author moises.alvarengausam
