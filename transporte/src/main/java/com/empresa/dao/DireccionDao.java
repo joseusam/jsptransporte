@@ -28,6 +28,8 @@ public class DireccionDao {
     private PreparedStatement ps;
     private String sql;
     
+    
+    
     public boolean eliminar(int id){
         sql = "DELETE FROM direccion WHERE iddireccion=?";
         try {
