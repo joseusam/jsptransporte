@@ -28,37 +28,5 @@ public class ApoderadoDao {
     private String sql;
     
     
-    public boolean insertar(ApoderadoBean apoBea){
     
-    sql = "insert into apoderado values(?,?)";
-        try {
-            
-            ps = conn.conexion().prepareStatement(sql);
-    
-    ps.setInt(1, apoBea.getIdapoder());
-    ps.setInt(2, persBea.getIdperson());
-    ps.executeUpdate();
-    return true;
-        } catch (Exception e) {
-            
-            return false;
-        }
-    }
-    
-    public boolean actualizar(ApoderadoBean apoBea){
-    
-     sql = "update apoderado set idpersona where idapoderado =?";
-        try {
-            
-            ps = conn.conexion().prepareStatement(sql);
-    
-    ps.setInt(1, persBea.getIdperson());
-    ps.setInt(2, apoBea.getIdapoder());
-    ps.executeUpdate();
-    return true;
-        } catch (Exception e) {
-            
-            return false;
-        }
-    }
 }
