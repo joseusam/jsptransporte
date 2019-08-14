@@ -29,6 +29,40 @@ public class BusDao {
         this.conn = conn;
     }
     
+     public boolean insertar(BusBean busLS){
+    
+    sql = "insert into bus values(?,?,?)";
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, busLS.getIdbus());
+            ps.setString(2, busLS.getPlacas());
+            ps.setInt(3, busLS.getAsient());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    }
+        public boolean actualizar(BusBean busLS){
+            
+            sql = "update bus set placa, asientos where idbus =?";
+            try {
+                ps = conn.conexion().prepareStatement(sql);
+                
+                ps.setString(1, busLS.getPlacas());
+                ps.setInt(2, busLS.getAsient());
+                ps.setInt(3, busLS.getIdbus());
+                ps.executeUpdate();
+                return true;
+            } catch (Exception e) {
+                
+                return false;
+            }
+        }
+   
     //22
     
     public boolean eliminar(int id){
