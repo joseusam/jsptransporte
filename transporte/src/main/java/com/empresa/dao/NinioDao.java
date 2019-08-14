@@ -12,6 +12,7 @@ import com.empresa.model.PersonaBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -74,6 +75,78 @@ public class NinioDao {
             
             return false;
         }
+    }
     
+    public boolean eliminar(int id){
+        sql = "DELETE ninio FROM WHERE idninio=?";
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error en Eliminar: "+e);
+            return false;
+        }
+    }
+    
+    public List<NinioBean> buscarTodo(){
+        sql = "SELECT * FROM ninio";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            niniLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                ninBea = new NinioBean(rs.getInt("idninio"));
+                
+                perBea = new PersonaBean(rs.getInt("idpersona"));
+                ninBea.setIdperson(perBea);
+                apoBea = new ApoderadoBean(rs.getInt("idapoderado"));
+                ninBea.setIdapoder(apoBea);
+                ninBea.setHoraP(rs.getDate("hora_p"));
+                ninBea.setHoraLl(rs.getDate("hora_ll"));
+                
+                niniLS.add(ninBea);
+            }
+            
+            return niniLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Todo:"+e);
+            return null;
+        }
+    }
+    
+    public List<NinioBean> buscarPorId(int id){
+        sql = "SELECT * FROM ninio WHERE idninio=?";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            
+            niniLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                ninBea = new NinioBean(rs.getInt("idninio"));
+                
+                perBea = new PersonaBean(rs.getInt("idpersona"));
+                ninBea.setIdperson(perBea);
+                apoBea = new ApoderadoBean(rs.getInt("idapoderado"));
+                ninBea.setIdapoder(apoBea);
+                ninBea.setHoraP(rs.getDate("hora_p"));
+                ninBea.setHoraLl(rs.getDate("hora_ll"));
+                
+                niniLS.add(ninBea);
+            }
+            
+            return niniLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Todo:"+e);
+            return null;
+        }
     }
 }
