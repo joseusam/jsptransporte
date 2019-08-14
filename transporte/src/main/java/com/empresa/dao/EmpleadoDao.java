@@ -10,6 +10,7 @@ import com.empresa.model.EmpleadoBean;
 import com.empresa.model.PersonaBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class EmpleadoDao {
     private Conexion conn;
     private EmpleadoBean empBea;
     private PersonaBean perBea;
-    private List<PersonaBean> persLS;
+    private List<EmpleadoBean> empLS;
     
     private PreparedStatement ps;
     private ResultSet rs;
@@ -63,7 +64,71 @@ public class EmpleadoDao {
         } catch (Exception e) {
             
             return false;
-        }
+        }    
+    }
     
+    public boolean eliminar(int id){
+        sql = "DELETE FROM empleado WHERE idempleado=?";
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error en Eliminar: "+e);
+            return false;
+        }
+    }
+    
+    public List<EmpleadoBean> buscarTodo(){
+        sql = "SELECT * FROM empleado";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            empLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                empBea = new EmpleadoBean(rs.getInt("idempleado"));
+                perBea = new PersonaBean(rs.getInt("idpersona"));
+                empBea.setIdperson(perBea);
+                empBea.setLicenc(rs.getString("licencia"));;
+                
+                empLS.add(empBea);
+            }
+            
+            return empLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Todo: "+e);
+            return null;
+        }
+    }
+    
+    public List<EmpleadoBean> buscarPorId(int id){
+        sql = "SELECT * FROM empleado WHERE idempleado=?";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            
+            empLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                empBea = new EmpleadoBean(rs.getInt("idempleado"));
+                perBea = new PersonaBean(rs.getInt("idpersona"));
+                empBea.setIdperson(perBea);
+                empBea.setLicenc(rs.getString("licencia"));;
+                
+                empLS.add(empBea);
+            }
+            
+            return empLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Por Id: "+e);
+            return null;
+        }
     }
 }
