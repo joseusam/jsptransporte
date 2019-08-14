@@ -11,6 +11,7 @@ import com.empresa.model.ContratoBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class ContratoDao {
     }
         public boolean actualizar(ContratoBean conBea){
         
-            sql = "update contrato set idapoderado, no_hijos, desde, hasta, periodo, precio, comentarios where idcontrato =?";
+            sql = "update contrato set idapoderado=, no_hijos, desde, hasta, periodo, precio, comentarios where idcontrato =?";
         try {
             
             ps = conn.conexion().prepareStatement(sql);
@@ -75,6 +76,77 @@ public class ContratoDao {
         } catch (Exception e) {
             return false;
         }
+        }
+        
+        public boolean eliminar(int id){
+            sql = "DELETE FROM contrato WHERE idcontrato=?";
+            try {
+                ps = conn.conexion().prepareStatement(sql);
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                
+                return true;
+            } catch (Exception e) {
+                System.out.println("Error en Eliminar" +e);
+                return false;
+            }
+        }
+        
+        public List<ContratoBean> buscarTodo(){
+            sql = "SELECT * FROM contrato";
+            try {
+                ps = conn.conexion().prepareStatement(sql);
+                rs = ps.executeQuery();
+                
+                contLS = new LinkedList<>();
+                
+                while (rs.next()) {                    
+                    conBea = new ContratoBean(rs.getInt("idcontrato"));
+                    apoBea = new ApoderadoBean(rs.getInt("idapoderado"));
+                    conBea.setIdapoder(apoBea);
+                    conBea.setNumHij(rs.getInt("no_hijos"));
+                    conBea.setDesde(rs.getDate("desde"));
+                    conBea.setHasta(rs.getDate("hasta"));
+                    conBea.setPeriod(rs.getInt("periodo"));
+                    conBea.setPrecio(rs.getDouble("precio"));
+                    conBea.setComenta(rs.getString("comentarios"));
+                    
+                    contLS.add(conBea);
+                }return contLS;
+                
+            } catch (Exception e) {
+                System.out.println("Error en Bucar Todo: "+e);
+                return null;
+            }
+        }
+        
+        public List<ContratoBean> buscarPorId(int id){
+            sql = "SELECT * FROM contrato";
+            try {
+                ps = conn.conexion().prepareStatement(sql);
+                ps.setInt(1, id);
+                rs = ps.executeQuery();
+                
+                contLS = new LinkedList<>();
+                
+                while (rs.next()) {                    
+                    conBea = new ContratoBean(rs.getInt("idcontrato"));
+                    apoBea = new ApoderadoBean(rs.getInt("idapoderado"));
+                    conBea.setIdapoder(apoBea);
+                    conBea.setNumHij(rs.getInt("no_hijos"));
+                    conBea.setDesde(rs.getDate("desde"));
+                    conBea.setHasta(rs.getDate("hasta"));
+                    conBea.setPeriod(rs.getInt("periodo"));
+                    conBea.setPrecio(rs.getDouble("precio"));
+                    conBea.setComenta(rs.getString("comentarios"));
+                    
+                    contLS.add(conBea);
+                }return contLS;
+                
+            } catch (Exception e) {
+                System.out.println("Error en Bucar Todo: "+e);
+                return null;
+            }
         }
     }
 
