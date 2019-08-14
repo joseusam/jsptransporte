@@ -29,6 +29,8 @@ public class BusDao {
         this.conn = conn;
     }
     
+    //24
+    
     public boolean eliminar(int id){
         sql = "DELETE FROM bus WHERE idbus=?";        
         try {
