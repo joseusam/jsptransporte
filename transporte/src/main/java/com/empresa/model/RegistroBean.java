@@ -17,8 +17,8 @@ public class RegistroBean {
     private Date horLle;
     private Date horRet;
     private String coment;
-    private String kilomP;
-    private String kilomR;
+    private double kilomP;
+    private double kilomR;
 
     public RegistroBean(int idregist) {
         this.idregist = idregist;
@@ -64,19 +64,19 @@ public class RegistroBean {
         this.coment = coment;
     }
 
-    public String getKilomP() {
+    public double getKilomP() {
         return kilomP;
     }
 
-    public void setKilomP(String kilomP) {
+    public void setKilomP(double kilomP) {
         this.kilomP = kilomP;
     }
 
-    public String getKilomR() {
+    public double getKilomR() {
         return kilomR;
     }
 
-    public void setKilomR(String kilomR) {
+    public void setKilomR(double kilomR) {
         this.kilomR = kilomR;
     }
         

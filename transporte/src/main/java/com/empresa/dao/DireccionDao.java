@@ -30,7 +30,7 @@ public class DireccionDao {
 
     public boolean insertar(DireccionBean dirBea) {
 
-        sql = "insert into direccion values()";
+        sql = "insert into direccion values(?,?,?)";
 
         try {
 
