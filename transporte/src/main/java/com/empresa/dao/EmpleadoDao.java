@@ -29,5 +29,41 @@ public class EmpleadoDao {
     public EmpleadoDao(Conexion conn) {
         this.conn = conn;
     }
+    public boolean insertar(EmpleadoBean ampBea){
     
+    sql = "insert into empleado values(?,?,?)";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, empBea.getIdemplea());
+            ps.setInt(2, perBea.getIdperson());
+            ps.setString(3, empBea.getLicenc());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    }
+    public boolean actualizar(EmpleadoBean ampBea){
+        
+     sql = "update empleado set idpersona, licencia where idempleado =?";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+                     
+            ps.setInt(1, perBea.getIdperson());
+            ps.setString(2, empBea.getLicenc());
+             ps.setInt(3, empBea.getIdemplea());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    
+    }
 }

@@ -6,6 +6,7 @@
 package com.empresa.dao;
 
 import com.empresa.conexion.Conexion;
+import com.empresa.model.ApoderadoBean;
 import com.empresa.model.NinioBean;
 import com.empresa.model.PersonaBean;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ public class NinioDao {
     private NinioBean ninBea;
     private PersonaBean perBea;
     private List<NinioBean> niniLS;
+    private ApoderadoBean apoBea;
     
     private PreparedStatement ps;
     private ResultSet rs;
@@ -32,5 +34,46 @@ public class NinioDao {
     public NinioDao(Conexion conn) {
         this.conn = conn;
     }
+    public boolean insertar(NinioBean ninBea){
     
+    sql = "insert into ninio values(?,?,?,?,?)";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, ninBea.getIdnino());
+            ps.setInt(2, perBea.getIdperson());
+            ps.setInt(3, apoBea.getIdapoder());
+            ps.setString(4, format.format(ninBea.getHoraP()));
+            ps.setString(5, format.format(ninBea.getHoraLl()));
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    }
+    public boolean actualizar(NinioBean ninBea){
+    
+         sql = "update ninio set idpersona, idapoderado, hora_p, hora_ll where idninio =?";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            
+            ps.setInt(1, perBea.getIdperson());
+            ps.setInt(2, apoBea.getIdapoder());
+            ps.setString(3, format.format(ninBea.getHoraP()));
+            ps.setString(4, format.format(ninBea.getHoraLl()));
+            ps.setInt(5, ninBea.getIdnino());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    
+    }
 }

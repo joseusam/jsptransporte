@@ -32,5 +32,49 @@ public class ContratoDao {
     public ContratoDao(Conexion conn) {
         this.conn = conn;
     }
+    public boolean insertar(ContratoBean conBea){
     
-}
+    sql = "insert into contrato values(?,?,?,?,?,?,?,?)";
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, conBea.getIdcontra());
+            ps.setInt(2, apoBea.getIdapoder());
+            ps.setInt(3, conBea.getNumHij());
+            ps.setString(4, format.format(conBea.getDesde()));
+            ps.setString(5, format.format(conBea.getHasta()));
+            ps.setInt(6, conBea.getPeriod());
+            ps.setDouble(7, conBea.getPrecio());
+            ps.setString(8, conBea.getComenta());
+            ps.executeUpdate();
+            return true;
+           
+        } catch (Exception e) {
+            return false;
+        }
+    }
+        public boolean actualizar(ContratoBean conBea){
+        
+            sql = "update contrato set idapoderado, no_hijos, desde, hasta, periodo, precio, comentarios where idcontrato =?";
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, apoBea.getIdapoder());
+            ps.setInt(2, conBea.getNumHij());
+            ps.setString(3, format.format(conBea.getDesde()));
+            ps.setString(4, format.format(conBea.getHasta()));
+            ps.setInt(5, conBea.getPeriod());
+            ps.setDouble(6, conBea.getPrecio());
+            ps.setString(7, conBea.getComenta());
+            ps.setInt(8, conBea.getIdcontra());
+            ps.executeUpdate();
+            return true;
+           
+        } catch (Exception e) {
+            return false;
+        }
+        }
+    }
+

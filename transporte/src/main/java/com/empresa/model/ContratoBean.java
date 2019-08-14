@@ -18,6 +18,7 @@ public class ContratoBean {
    private int idcontra;
    private ApoderadoBean idapoder;
    private int numHij;
+   private Date desde;
    private Date hasta;
    private int period;
    private double precio;
@@ -50,6 +51,7 @@ public class ContratoBean {
     public void setNumHij(int numHij) {
         this.numHij = numHij;
     }
+    
 
     public Date getHasta() {
         return hasta;
@@ -81,6 +83,14 @@ public class ContratoBean {
 
     public void setComenta(String comenta) {
         this.comenta = comenta;
+    }
+
+    public Date getDesde() {
+        return desde;
+    }
+
+    public void setDesde(Date desde) {
+        this.desde = desde;
     }
 
 }
