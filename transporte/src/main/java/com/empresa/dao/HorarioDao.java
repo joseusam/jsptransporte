@@ -14,6 +14,7 @@ import com.empresa.model.RutaBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -80,7 +81,83 @@ public class HorarioDao {
         } catch (Exception e) {
             
             return false;
-        }
+        }    
+    }
     
+    public boolean eliminar(int id){
+        sql = "DELETE FROM horario WHERE idhorario=?";
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error en Eliminar: "+e);
+            return false;
+        }
+    }
+    
+    public List<HorarioBean> buscarTodo(){
+        sql = "SELECT * FROM horario";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            horaLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                horBea = new HorarioBean(rs.getInt("idhorario"));                
+                
+                empBea = new EmpleadoBean(rs.getInt("idempleado"));
+                horBea.setIdemplea(empBea);
+                rolBea = new RolBean(rs.getInt("idrol"));
+                horBea.setIdrol(rolBea);
+                horBea.setFecha(rs.getDate("fecha"));
+                busBea = new BusBean(rs.getInt("idbus"));
+                horBea.setIdbus(busBea);
+                rutBea = new RutaBean(rs.getInt("idruta"));
+                
+                horaLS.add(horBea);
+            }
+            
+            return horaLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Todo:"+e);
+            return null;
+        }
+    }
+    
+    public List<HorarioBean> buscarPorId(int id){
+        sql = "SELECT * FROM horario WHERE idhorario=?";
+        
+        try {
+            ps = conn.conexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            
+            horaLS = new LinkedList<>();
+            
+            while (rs.next()) {                
+                horBea = new HorarioBean(rs.getInt("idhorario"));                
+                
+                empBea = new EmpleadoBean(rs.getInt("idempleado"));
+                horBea.setIdemplea(empBea);
+                rolBea = new RolBean(rs.getInt("idrol"));
+                horBea.setIdrol(rolBea);
+                horBea.setFecha(rs.getDate("fecha"));
+                busBea = new BusBean(rs.getInt("idbus"));
+                horBea.setIdbus(busBea);
+                rutBea = new RutaBean(rs.getInt("idruta"));
+                
+                horaLS.add(horBea);
+            }
+            
+            return horaLS;
+        } catch (Exception e) {
+            System.out.println("Error en Buscar Todo Por Id:"+e);
+            return null;
+        }
     }
 }
