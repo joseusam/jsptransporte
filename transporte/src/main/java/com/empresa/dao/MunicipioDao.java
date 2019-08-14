@@ -29,6 +29,43 @@ public class MunicipioDao {
         this.conn = conn;
     }
     
+    public boolean insertar(MunicipioBean munBea){
+    
+    sql = "insert into municipio values(?,?)";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            ps.setInt(1, munBea.getIdmun());
+            ps.setString(2, munBea.getMun());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    }
+    public boolean actualizar(MunicipioBean munBea){
+     sql = "update municipio set municipio where idmunicipio";
+    
+        try {
+            
+            ps = conn.conexion().prepareStatement(sql);
+            
+            
+            ps.setString(1, munBea.getMun());
+            ps.setInt(2, munBea.getIdmun());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            
+            return false;
+        }
+    
+    }
+    
+    
     public boolean eliminar(int id){
         sql = "DELETE FROM municipio WHERE idmunicipio=?";
         try {
